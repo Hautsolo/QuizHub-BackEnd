@@ -1,0 +1,684 @@
+[
+    {
+      "model": "quizhubapi.user",
+      "pk": 1,
+      "fields": {
+        "username": "admin",
+        "email": "admin@quizhub.com",
+        "password": "pbkdf2_sha256$600000$placeholder$hash",
+        "role": "admin",
+        "points": 1500,
+        "streak_days": 7,
+        "status": "active",
+        "is_staff": true,
+        "is_superuser": true,
+        "date_joined": "2025-01-01T10:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.user",
+      "pk": 2,
+      "fields": {
+        "username": "john_doe",
+        "email": "john@example.com",
+        "password": "pbkdf2_sha256$600000$placeholder$hash",
+        "role": "user",
+        "points": 850,
+        "streak_days": 3,
+        "status": "active",
+        "is_staff": false,
+        "is_superuser": false,
+        "date_joined": "2025-01-02T14:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.user",
+      "pk": 3,
+      "fields": {
+        "username": "jane_smith",
+        "email": "jane@example.com",
+        "password": "pbkdf2_sha256$600000$placeholder$hash",
+        "role": "moderator",
+        "points": 1200,
+        "streak_days": 5,
+        "status": "active",
+        "is_staff": true,
+        "is_superuser": false,
+        "date_joined": "2025-01-03T09:15:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.user",
+      "pk": 4,
+      "fields": {
+        "username": "quiz_master",
+        "email": "master@example.com",
+        "password": "pbkdf2_sha256$600000$placeholder$hash",
+        "role": "user",
+        "points": 2100,
+        "streak_days": 10,
+        "status": "active",
+        "is_staff": false,
+        "is_superuser": false,
+        "date_joined": "2025-01-04T16:45:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.category",
+      "pk": 1,
+      "fields": {
+        "name": "Science",
+        "description": "Questions about physics, chemistry, biology, and general science",
+        "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+        "is_active": true,
+        "created_at": "2025-01-01T12:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.category",
+      "pk": 2,
+      "fields": {
+        "name": "History",
+        "description": "Historical events, figures, and periods from around the world",
+        "image_url": "https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=400",
+        "is_active": true,
+        "created_at": "2025-01-01T12:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.category",
+      "pk": 3,
+      "fields": {
+        "name": "Sports",
+        "description": "Sports trivia, athletes, and sporting events",
+        "image_url": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400",
+        "is_active": true,
+        "created_at": "2025-01-01T12:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.category",
+      "pk": 4,
+      "fields": {
+        "name": "Technology",
+        "description": "Computing, programming, gadgets, and tech innovations",
+        "image_url": "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400",
+        "is_active": true,
+        "created_at": "2025-01-01T12:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.category",
+      "pk": 5,
+      "fields": {
+        "name": "Entertainment",
+        "description": "Movies, music, TV shows, celebrities, and pop culture",
+        "image_url": "https://images.unsplash.com/photo-1489599735734-79b4af4e2591?w=400",
+        "is_active": true,
+        "created_at": "2025-01-01T12:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.topic",
+      "pk": 1,
+      "fields": {
+        "category": 1,
+        "name": "Physics",
+        "difficulty": 3,
+        "is_active": true,
+        "created_at": "2025-01-01T12:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.topic",
+      "pk": 2,
+      "fields": {
+        "category": 1,
+        "name": "Chemistry",
+        "difficulty": 3,
+        "is_active": true,
+        "created_at": "2025-01-01T12:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.topic",
+      "pk": 3,
+      "fields": {
+        "category": 1,
+        "name": "Biology",
+        "difficulty": 2,
+        "is_active": true,
+        "created_at": "2025-01-01T12:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.topic",
+      "pk": 4,
+      "fields": {
+        "category": 2,
+        "name": "World War II",
+        "difficulty": 3,
+        "is_active": true,
+        "created_at": "2025-01-01T12:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.topic",
+      "pk": 5,
+      "fields": {
+        "category": 2,
+        "name": "Ancient History",
+        "difficulty": 4,
+        "is_active": true,
+        "created_at": "2025-01-01T12:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.topic",
+      "pk": 6,
+      "fields": {
+        "category": 3,
+        "name": "Football",
+        "difficulty": 2,
+        "is_active": true,
+        "created_at": "2025-01-01T12:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.topic",
+      "pk": 7,
+      "fields": {
+        "category": 3,
+        "name": "Olympics",
+        "difficulty": 3,
+        "is_active": true,
+        "created_at": "2025-01-01T12:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.topic",
+      "pk": 8,
+      "fields": {
+        "category": 4,
+        "name": "Programming",
+        "difficulty": 3,
+        "is_active": true,
+        "created_at": "2025-01-01T12:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.topic",
+      "pk": 9,
+      "fields": {
+        "category": 4,
+        "name": "Artificial Intelligence",
+        "difficulty": 4,
+        "is_active": true,
+        "created_at": "2025-01-01T12:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.topic",
+      "pk": 10,
+      "fields": {
+        "category": 5,
+        "name": "Movies",
+        "difficulty": 2,
+        "is_active": true,
+        "created_at": "2025-01-01T12:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.question",
+      "pk": 1,
+      "fields": {
+        "topic": 1,
+        "text": "What is the speed of light in vacuum?",
+        "type": "multiple_choice",
+        "difficulty": 2,
+        "created_by": 1,
+        "status": "approved",
+        "created_at": "2025-01-01T13:00:00Z",
+        "updated_at": "2025-01-01T13:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 1,
+      "fields": {
+        "question": 1,
+        "text": "299,792,458 m/s",
+        "is_correct": true,
+        "order": 1
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 2,
+      "fields": {
+        "question": 1,
+        "text": "300,000,000 m/s",
+        "is_correct": false,
+        "order": 2
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 3,
+      "fields": {
+        "question": 1,
+        "text": "150,000,000 m/s",
+        "is_correct": false,
+        "order": 3
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 4,
+      "fields": {
+        "question": 1,
+        "text": "500,000,000 m/s",
+        "is_correct": false,
+        "order": 4
+      }
+    },
+    {
+      "model": "quizhubapi.question",
+      "pk": 2,
+      "fields": {
+        "topic": 1,
+        "text": "Is gravity a force according to Einstein's theory of relativity?",
+        "type": "true_false",
+        "difficulty": 3,
+        "created_by": 1,
+        "status": "approved",
+        "created_at": "2025-01-01T13:15:00Z",
+        "updated_at": "2025-01-01T13:15:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 5,
+      "fields": {
+        "question": 2,
+        "text": "True",
+        "is_correct": false,
+        "order": 1
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 6,
+      "fields": {
+        "question": 2,
+        "text": "False",
+        "is_correct": true,
+        "order": 2
+      }
+    },
+    {
+      "model": "quizhubapi.question",
+      "pk": 3,
+      "fields": {
+        "topic": 2,
+        "text": "What is the chemical symbol for Gold?",
+        "type": "multiple_choice",
+        "difficulty": 1,
+        "created_by": 2,
+        "status": "approved",
+        "created_at": "2025-01-01T14:00:00Z",
+        "updated_at": "2025-01-01T14:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 7,
+      "fields": {
+        "question": 3,
+        "text": "Au",
+        "is_correct": true,
+        "order": 1
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 8,
+      "fields": {
+        "question": 3,
+        "text": "Ag",
+        "is_correct": false,
+        "order": 2
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 9,
+      "fields": {
+        "question": 3,
+        "text": "Go",
+        "is_correct": false,
+        "order": 3
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 10,
+      "fields": {
+        "question": 3,
+        "text": "Gd",
+        "is_correct": false,
+        "order": 4
+      }
+    },
+    {
+      "model": "quizhubapi.question",
+      "pk": 4,
+      "fields": {
+        "topic": 4,
+        "text": "In which year did World War II end?",
+        "type": "multiple_choice",
+        "difficulty": 2,
+        "created_by": 3,
+        "status": "approved",
+        "created_at": "2025-01-01T15:00:00Z",
+        "updated_at": "2025-01-01T15:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 11,
+      "fields": {
+        "question": 4,
+        "text": "1945",
+        "is_correct": true,
+        "order": 1
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 12,
+      "fields": {
+        "question": 4,
+        "text": "1944",
+        "is_correct": false,
+        "order": 2
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 13,
+      "fields": {
+        "question": 4,
+        "text": "1946",
+        "is_correct": false,
+        "order": 3
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 14,
+      "fields": {
+        "question": 4,
+        "text": "1943",
+        "is_correct": false,
+        "order": 4
+      }
+    },
+    {
+      "model": "quizhubapi.question",
+      "pk": 5,
+      "fields": {
+        "topic": 8,
+        "text": "Which programming language is known as the 'language of the web'?",
+        "type": "multiple_choice",
+        "difficulty": 1,
+        "created_by": 4,
+        "status": "approved",
+        "created_at": "2025-01-01T16:00:00Z",
+        "updated_at": "2025-01-01T16:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 15,
+      "fields": {
+        "question": 5,
+        "text": "JavaScript",
+        "is_correct": true,
+        "order": 1
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 16,
+      "fields": {
+        "question": 5,
+        "text": "Python",
+        "is_correct": false,
+        "order": 2
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 17,
+      "fields": {
+        "question": 5,
+        "text": "Java",
+        "is_correct": false,
+        "order": 3
+      }
+    },
+    {
+      "model": "quizhubapi.answer",
+      "pk": 18,
+      "fields": {
+        "question": 5,
+        "text": "C++",
+        "is_correct": false,
+        "order": 4
+      }
+    },
+    {
+      "model": "quizhubapi.quiz",
+      "pk": 1,
+      "fields": {
+        "title": "Science Basics",
+        "description": "Test your knowledge of basic science concepts",
+        "category": 1,
+        "created_by": 1,
+        "is_public": true,
+        "max_questions": 10,
+        "time_limit": 300,
+        "created_at": "2025-01-02T10:00:00Z",
+        "updated_at": "2025-01-02T10:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.quiz",
+      "pk": 2,
+      "fields": {
+        "title": "World History Challenge",
+        "description": "How well do you know world history?",
+        "category": 2,
+        "created_by": 3,
+        "is_public": true,
+        "max_questions": 15,
+        "time_limit": 450,
+        "created_at": "2025-01-02T11:00:00Z",
+        "updated_at": "2025-01-02T11:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.quiz",
+      "pk": 3,
+      "fields": {
+        "title": "Programming Fundamentals",
+        "description": "Basic programming concepts and languages",
+        "category": 4,
+        "created_by": 4,
+        "is_public": true,
+        "max_questions": 12,
+        "time_limit": 360,
+        "created_at": "2025-01-02T12:00:00Z",
+        "updated_at": "2025-01-02T12:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.match",
+      "pk": 1,
+      "fields": {
+        "quiz": 1,
+        "created_by": 2,
+        "is_private": false,
+        "allow_guests": true,
+        "max_players": 4,
+        "status": "waiting",
+        "room_code": "QUIZ2025",
+        "created_at": "2025-01-03T14:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.match",
+      "pk": 2,
+      "fields": {
+        "quiz": 2,
+        "created_by": 3,
+        "is_private": true,
+        "allow_guests": false,
+        "max_players": 2,
+        "status": "completed",
+        "room_code": "HIST456",
+        "created_at": "2025-01-03T15:00:00Z",
+        "started_at": "2025-01-03T15:05:00Z",
+        "ended_at": "2025-01-03T15:25:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.guest",
+      "pk": 1,
+      "fields": {
+        "session_id": "guest_session_001",
+        "display_name": "QuizLover123",
+        "created_at": "2025-01-03T14:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.guest",
+      "pk": 2,
+      "fields": {
+        "session_id": "guest_session_002",
+        "display_name": "BrainTeaser",
+        "created_at": "2025-01-03T16:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.matchplayer",
+      "pk": 1,
+      "fields": {
+        "match": 1,
+        "user": 2,
+        "score": 0,
+        "is_ready": true,
+        "joined_at": "2025-01-03T14:01:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.matchplayer",
+      "pk": 2,
+      "fields": {
+        "match": 1,
+        "guest": 1,
+        "score": 0,
+        "is_ready": false,
+        "joined_at": "2025-01-03T14:32:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.friendship",
+      "pk": 1,
+      "fields": {
+        "user1": 2,
+        "user2": 3,
+        "status": "accepted",
+        "created_at": "2025-01-02T09:00:00Z",
+        "updated_at": "2025-01-02T09:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.friendship",
+      "pk": 2,
+      "fields": {
+        "user1": 2,
+        "user2": 4,
+        "status": "accepted",
+        "created_at": "2025-01-02T10:00:00Z",
+        "updated_at": "2025-01-02T10:15:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.follow",
+      "pk": 1,
+      "fields": {
+        "follower": 2,
+        "following": 1,
+        "created_at": "2025-01-02T08:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.follow",
+      "pk": 2,
+      "fields": {
+        "follower": 3,
+        "following": 4,
+        "created_at": "2025-01-02T08:30:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.follow",
+      "pk": 3,
+      "fields": {
+        "follower": 4,
+        "following": 1,
+        "created_at": "2025-01-02T09:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.notification",
+      "pk": 1,
+      "fields": {
+        "user": 2,
+        "type": "friend_request",
+        "title": "New Friend Request",
+        "message": "jane_smith sent you a friend request",
+        "data": {"friend_request_id": 1},
+        "is_read": true,
+        "created_at": "2025-01-02T09:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.notification",
+      "pk": 2,
+      "fields": {
+        "user": 3,
+        "type": "match_invite",
+        "title": "Match Starting Soon",
+        "message": "Your match 'Science Basics' is about to start",
+        "data": {"match_id": 1},
+        "is_read": false,
+        "created_at": "2025-01-03T14:00:00Z"
+      }
+    },
+    {
+      "model": "quizhubapi.notification",
+      "pk": 3,
+      "fields": {
+        "user": 4,
+        "type": "friend_playing",
+        "title": "Friend Started Following",
+        "message": "jane_smith started following you",
+        "data": {"user_id": 3},
+        "is_read": false,
+        "created_at": "2025-01-02T08:30:00Z"
+      }
+    }
+  ]
