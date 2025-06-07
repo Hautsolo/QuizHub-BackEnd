@@ -78,7 +78,8 @@
       "score": 2100,
       "total_quizzes": 3,
       "average_percentage": 85.5,
-      "best_streak": 10
+      "best_streak": 10,
+      "updated_at": "2025-01-05T15:00:00Z"
     }
   },
   {
@@ -91,7 +92,8 @@
       "score": 1500,
       "total_quizzes": 2,
       "average_percentage": 90.0,
-      "best_streak": 7
+      "best_streak": 7,
+      "updated_at": "2025-01-05T15:00:00Z"
     }
   },
   {
@@ -104,7 +106,8 @@
       "score": 1200,
       "total_quizzes": 1,
       "average_percentage": 100.0,
-      "best_streak": 5
+      "best_streak": 5,
+      "updated_at": "2025-01-05T15:00:00Z"
     }
   }
 ]
