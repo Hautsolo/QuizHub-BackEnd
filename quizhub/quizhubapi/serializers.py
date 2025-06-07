@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.db import models
+from django.utils import timezone
 from .models import *
 
 class UserSerializer(serializers.ModelSerializer):
@@ -69,22 +70,54 @@ class TopicSerializer(serializers.ModelSerializer):
     def get_questions_count(self, obj):
         return obj.questions.filter(status='approved').count()
 
+class MediaFileSerializer(serializers.ModelSerializer):
+    file_url = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = MediaFile
+        fields = ['id', 'file', 'file_url', 'media_type', 'original_filename', 
+                 'file_size', 'mime_type', 'duration', 'width', 'height', 'uploaded_at']
+        read_only_fields = ['uploaded_by', 'uploaded_at']
+    
+    def get_file_url(self, obj):
+        if obj.file:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.file.url)
+            return obj.file.url
+        return None
+    
+    def create(self, validated_data):
+        validated_data['uploaded_by'] = self.context['request'].user
+        return super().create(validated_data)
+
 class AnswerSerializer(serializers.ModelSerializer):
+    media_url = serializers.SerializerMethodField()
+    
     class Meta:
         model = Answer
-        fields = ['id', 'text', 'is_correct', 'order']
+        fields = ['id', 'text', 'is_correct', 'order', 'media_type', 
+                 'image', 'audio', 'video', 'media_url', 'media_description']
+    
+    def get_media_url(self, obj):
+        return obj.get_media_url()
 
 class QuestionSerializer(serializers.ModelSerializer):
     answers = AnswerSerializer(many=True)
     topic_name = serializers.CharField(source='topic.name', read_only=True)
     category_name = serializers.CharField(source='topic.category.name', read_only=True)
     creator_name = serializers.CharField(source='created_by.username', read_only=True)
+    media_url = serializers.SerializerMethodField()
     
     class Meta:
         model = Question
         fields = ['id', 'text', 'type', 'difficulty', 'topic', 'topic_name',
                  'category_name', 'status', 'created_by', 'creator_name', 
-                 'created_at', 'answers']
+                 'created_at', 'answers', 'media_type', 'image', 'audio', 'video',
+                 'media_url', 'media_description', 'duration']
+    
+    def get_media_url(self, obj):
+        return obj.get_media_url()
     
     def create(self, validated_data):
         answers_data = validated_data.pop('answers')
@@ -109,6 +142,102 @@ class QuizSerializer(serializers.ModelSerializer):
     def get_questions_count(self, obj):
         return obj.questions.count()
 
+# Solo Play Serializers
+class QuizAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuizAnswer
+        fields = ['question', 'selected_answer', 'is_correct', 'time_taken']
+
+class QuizAttemptSerializer(serializers.ModelSerializer):
+    answers = QuizAnswerSerializer(many=True, read_only=True)
+    quiz_title = serializers.CharField(source='quiz.title', read_only=True)
+    user_display = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = QuizAttempt
+        fields = ['id', 'quiz', 'quiz_title', 'user', 'guest', 'user_display',
+                 'score', 'total_questions', 'correct_answers', 'percentage',
+                 'time_taken', 'status', 'started_at', 'completed_at', 'answers']
+        read_only_fields = ['percentage']
+    
+    def get_user_display(self, obj):
+        if obj.user:
+            return obj.user.username
+        elif obj.guest:
+            return obj.guest.display_name
+        return 'Anonymous'
+
+class QuizAttemptCreateSerializer(serializers.ModelSerializer):
+    answers = serializers.ListField(write_only=True)
+    
+    class Meta:
+        model = QuizAttempt
+        fields = ['quiz', 'answers', 'time_taken']
+    
+    def create(self, validated_data):
+        answers_data = validated_data.pop('answers')
+        user = self.context['request'].user if self.context['request'].user.is_authenticated else None
+        
+        # Create the attempt
+        attempt = QuizAttempt.objects.create(
+            user=user,
+            total_questions=len(answers_data),
+            **validated_data
+        )
+        
+        # Create individual answers
+        correct_count = 0
+        for answer_data in answers_data:
+            is_correct = answer_data.get('is_correct', False)
+            if is_correct:
+                correct_count += 1
+                
+            QuizAnswer.objects.create(
+                attempt=attempt,
+                question_id=answer_data['question_id'],
+                selected_answer_id=answer_data.get('selected_answer_id'),
+                is_correct=is_correct,
+                time_taken=answer_data.get('time_taken')
+            )
+        
+        # Update attempt stats
+        attempt.correct_answers = correct_count
+        attempt.percentage = attempt.calculate_percentage()
+        attempt.score = attempt.award_points()
+        attempt.status = 'completed'
+        attempt.completed_at = timezone.now()
+        attempt.save()
+        
+        # Award points to user
+        if attempt.user:
+            attempt.user.points += attempt.score
+            attempt.user.save()
+        
+        return attempt
+
+class LeaderboardEntrySerializer(serializers.ModelSerializer):
+    user_name = serializers.SerializerMethodField()
+    guest_name = serializers.CharField(source='guest.display_name', read_only=True)
+    
+    class Meta:
+        model = LeaderboardEntry
+        fields = ['rank', 'user', 'guest', 'user_name', 'guest_name', 'score', 
+                 'total_quizzes', 'average_percentage', 'best_streak']
+    
+    def get_user_name(self, obj):
+        return obj.user.username if obj.user else None
+
+class LeaderboardSerializer(serializers.ModelSerializer):
+    entries = LeaderboardEntrySerializer(many=True, read_only=True)
+    category_name = serializers.CharField(source='category.name', read_only=True)
+    quiz_title = serializers.CharField(source='quiz.title', read_only=True)
+    
+    class Meta:
+        model = Leaderboard
+        fields = ['id', 'name', 'type', 'category', 'category_name', 
+                 'quiz', 'quiz_title', 'entries', 'last_updated']
+
+# Match Serializers
 class MatchPlayerSerializer(serializers.ModelSerializer):
     display_name = serializers.CharField(read_only=True)
     user_data = UserSerializer(source='user', read_only=True)
@@ -152,6 +281,7 @@ class MatchSupportSerializer(serializers.ModelSerializer):
             return obj.supporter_user.username
         return obj.supporter_guest.display_name if obj.supporter_guest else 'Anonymous'
 
+# Social Serializers
 class FriendRequestSerializer(serializers.ModelSerializer):
     sender_name = serializers.CharField(source='sender.username', read_only=True)
     receiver_name = serializers.CharField(source='receiver.username', read_only=True)
@@ -173,11 +303,13 @@ class FriendshipSerializer(serializers.ModelSerializer):
         friend = obj.user2 if obj.user1 == user else obj.user1
         return UserSerializer(friend).data
 
+# Notification Serializers
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ['id', 'type', 'title', 'message', 'data', 'is_read', 'created_at']
 
+# Moderation Serializers
 class ReportSerializer(serializers.ModelSerializer):
     reporter_name = serializers.CharField(source='reporter.username', read_only=True)
     reviewed_by_name = serializers.CharField(source='reviewed_by.username', read_only=True)

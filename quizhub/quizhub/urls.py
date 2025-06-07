@@ -1,4 +1,3 @@
-# quizhub/urls.py
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -62,6 +61,9 @@ urlpatterns = [
     
     # Guest endpoints
     path('api/guest/create/', CreateGuestView.as_view(), name='create-guest'),
+    
+    # Allauth URLs (ADD THIS LINE)
+    path('accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:

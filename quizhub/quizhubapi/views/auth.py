@@ -9,6 +9,12 @@ from django.contrib.auth import authenticate
 from ..models import User
 from ..serializers import UserSerializer, UserProfileSerializer
 
+# Add this import for the social auth view
+try:
+    from allauth.socialaccount.models import SocialAccount
+except ImportError:
+    SocialAccount = None
+
 class RegisterView(APIView):
     permission_classes = [AllowAny]
     
@@ -85,3 +91,19 @@ class ProfileView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Social Auth View (add this only if you want to use it later)
+class SocialAuthView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        # This will be called after social login redirect
+        if request.user.is_authenticated:
+            refresh = RefreshToken.for_user(request.user)
+            return Response({
+                'user': UserSerializer(request.user).data,
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
+        return Response({'error': 'Authentication failed'}, 
+                       status=status.HTTP_401_UNAUTHORIZED)

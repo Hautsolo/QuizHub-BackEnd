@@ -27,10 +27,24 @@ class TopicAdmin(admin.ModelAdmin):
     list_filter = ['category', 'difficulty', 'is_active']
     search_fields = ['name']
 
+@admin.register(MediaFile)
+class MediaFileAdmin(admin.ModelAdmin):
+    list_display = ['original_filename', 'media_type', 'file_size', 'uploaded_by', 'uploaded_at']
+    list_filter = ['media_type', 'uploaded_at']
+    search_fields = ['original_filename', 'uploaded_by__username']
+    readonly_fields = ['file_size', 'mime_type', 'width', 'height', 'duration']
+
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['text', 'topic', 'type', 'difficulty', 'status', 'created_by']
-    list_filter = ['type', 'difficulty', 'status', 'topic__category']
+    list_display = ['text', 'topic', 'type', 'media_type', 'difficulty', 'status', 'created_by']
+    list_filter = ['type', 'media_type', 'difficulty', 'status', 'topic__category']
+    search_fields = ['text']
+    readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ['text', 'question', 'media_type', 'is_correct', 'order']
+    list_filter = ['media_type', 'is_correct']
     search_fields = ['text']
 
 @admin.register(Quiz)
@@ -38,6 +52,29 @@ class QuizAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'created_by', 'is_public', 'created_at']
     list_filter = ['category', 'is_public']
     search_fields = ['title']
+
+@admin.register(QuizAttempt)
+class QuizAttemptAdmin(admin.ModelAdmin):
+    list_display = ['user', 'quiz', 'score', 'percentage', 'status', 'started_at']
+    list_filter = ['status', 'quiz__category', 'started_at']
+    search_fields = ['user__username', 'quiz__title']
+    readonly_fields = ['percentage']
+
+@admin.register(QuizAnswer)
+class QuizAnswerAdmin(admin.ModelAdmin):
+    list_display = ['attempt', 'question', 'is_correct', 'answered_at']
+    list_filter = ['is_correct', 'answered_at']
+
+@admin.register(Leaderboard)
+class LeaderboardAdmin(admin.ModelAdmin):
+    list_display = ['name', 'type', 'category', 'quiz', 'last_updated']
+    list_filter = ['type', 'category']
+
+@admin.register(LeaderboardEntry)
+class LeaderboardEntryAdmin(admin.ModelAdmin):
+    list_display = ['leaderboard', 'user', 'rank', 'score', 'updated_at']
+    list_filter = ['leaderboard__type', 'rank']
+    ordering = ['leaderboard', 'rank']
 
 @admin.register(Match)
 class MatchAdmin(admin.ModelAdmin):
