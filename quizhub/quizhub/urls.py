@@ -1,3 +1,4 @@
+# quizhub/quizhub/urls.py - Updated with Missing Endpoints
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -9,6 +10,9 @@ from quizhubapi.views.user import UserViewSet
 from quizhubapi.views.content import CategoryViewSet, TopicViewSet, QuestionViewSet, QuizViewSet
 from quizhubapi.views.match import MatchViewSet
 from quizhubapi.views.moderation import ReportViewSet, NotificationViewSet
+
+# Import new Solo Play ViewSets
+from quizhubapi.views.solo import QuizAttemptViewSet, LeaderboardViewSet
 
 # Import API Views
 from quizhubapi.views.auth import RegisterView, LoginView, RefreshTokenView, LogoutView, ProfileView
@@ -31,6 +35,10 @@ router.register(r'quizzes', QuizViewSet)
 router.register(r'matches', MatchViewSet)
 router.register(r'notifications', NotificationViewSet)
 router.register(r'reports', ReportViewSet)
+
+# NEW: Register Solo Play ViewSets
+router.register(r'quiz-attempts', QuizAttemptViewSet, basename='quizattempt')
+router.register(r'leaderboards', LeaderboardViewSet, basename='leaderboard')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -62,7 +70,7 @@ urlpatterns = [
     # Guest endpoints
     path('api/guest/create/', CreateGuestView.as_view(), name='create-guest'),
     
-    # Allauth URLs (ADD THIS LINE)
+    # Allauth URLs
     path('accounts/', include('allauth.urls')),
 ]
 
