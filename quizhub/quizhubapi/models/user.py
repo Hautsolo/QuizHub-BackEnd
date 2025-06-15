@@ -25,6 +25,12 @@ class User(AbstractUser):
     status = models.CharField(max_length=10, choices=STATUSES, default='active')
     last_login = models.DateTimeField(null=True, blank=True)
     
+    # Country information
+    country = models.CharField(max_length=2, null=True, blank=True)  # ISO country code
+    country_name = models.CharField(max_length=100, null=True, blank=True)
+    country_rank = models.IntegerField(null=True, blank=True)
+    global_rank = models.IntegerField(null=True, blank=True)
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
     
